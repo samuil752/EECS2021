@@ -1,0 +1,27 @@
+PC tracker
+
+1. PCin <-- entryp
+2. PC <-- PCin
+3. new ins fetched & PCp4<--PC+4
+
+4. loop while(!posedge || isbranch=0&& zero=0 || isjump=0):
+5. PCin <-- PCp4
+6. PC <-- PCin //next ins problem
+7. end loop
+
+8. if (isbranch=1 && zero=1) begin
+9. loop while (!posedge):
+A. PCin <-- (bTarget=PC+bImm*4)
+B. PC <-- PCin //next ins problem
+C. end loop end
+
+D. if (isjump=1) begin
+E. loop while (!posedge):
+F. PCin <-- (jtarget=PC+jImm*4)
+G. PC <-- PCin //next ins problem
+H. end loop end
+
+I. goto 3.
+
+
+

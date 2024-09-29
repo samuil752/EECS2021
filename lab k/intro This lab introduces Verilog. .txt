@@ -1,0 +1,20 @@
+intro: This lab introduces Verilog. Verilog is a hardware description language. It has similar syntax to C and Java and is case sensitive. There are 3 steps before starting simulation in Verilog. 1) instantiation of hardware, 2)simulate the system clock, 3)load and run. A module is given a name and can mean different hardware components or simulation components.
+
+exp:
+k1a01.v
+signals are defined as "regs" and regs are used for registers as well. These will be housed under the always or initial block. The initial block allows execution of code within the block after the simulation starts. The $display() is used for displaying text and variables inside the console. The code inside the always and initial blocks are wrapped with begin and end. The $finish is to indicate the end of the simulation and the end of the module is indicated with endmodule.
+
+k1b01.v
+We can use formatting specifiers and specifiers with length like how we do in c programming language or Java. "x" is a symbol in Verilog meaning unknown or "don't care". x can be outputted if a variable has not been initialized for example. To make the times on the last two instructions 20 and 30 respectively, we need to change all the "#(some number)" to "#10" this will ensure the time accumulation is constant.
+
+k1d01.v 
+$monitor can be used instead of $display for more tracking complex simulations. They are used to track variable changes inside the simulation.
+
+k2a01.v
+not, and, xor and buf are all examples of primitive gates. Just like the rest, "not" is used like how a class is used in java. "not" is followed by the name of the object (instance variable) (optional) followed by brackets known as ports and is like a constructor. Variables set by the circuit is declared by "wire", this is a read-only "nets". This means they cannot be modified. We can also use "assign" instead of sharing wire names in different ports. This simulation computes the values of z which is and(not(b),a), while a=1 and b=1. We can also take input from the user by using "$value$plusargs", "flag = $value$plusargs("a=%b", a)" for example takes input by parsing the inputs from the command line, the parsing is done thanks to the first argument and the second argument instantiates the variable a. 
+
+k2b01.v
+This program tests the circuit with different inputs. The method we used to test was the exhaustive testing method, that is all cases for inputs. We used for-loops to generate every possible input to the circuit. For testing we can use an Oracle, which is basically tells us whether the test cases have passed or failed.
+
+conclusion:
+The lab goes over some basic Verilog concepts used in simulations those include variable types: "regs", "wire" and "integer" also goes over some functionalities that can be done in simulations, those are, "$display" and "$monitor" for debugging and output, "assign" for connecting ports. We discovered how we can test our simulations with different inputs in Verilog using the Oracle and using loops.

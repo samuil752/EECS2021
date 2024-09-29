@@ -1,0 +1,19 @@
+LAB N
+
+intro: This lab finishes what was left out in the previous lab. The lab completes the chip of the CPU which would be used to run the RISC-V program in ram.dat. We implement and create a Data memory, write back modules as well as modify instruction fetch so that it that it promotes the behavioural logic to the circuit level. We added some control modules that promotes some of the behavioural logic to the circuit level. We added an alu control module that will assign the right alu op code which is dependent on the instruction. We put all the modules together inside a larger module called chip and used that only in our last program.
+
+labN1.v
+Here we implement two modules that is the data memory and the write back. Data memory is useful when we are dealing with load and store. When loading data memory will output memOut for reading. When storing DataMem will write into the memory by rd2. write back is writing back into the register. The determinant Mem2Reg will dictate whether we can write back from memory into the register or not. If Mem2Reg is 1 then yes else no. Mem2Reg will be 1 when its a load instruction. Figure 3 shows the data path:
+fetch-->decode-->execute-->[ dataMemory-->writeBack or writeBack ]-->decode(for writing back)
+We behaviourally implement the "preparing for the next instruction" part of the program. This is done with if statements and opcodes that determines the instructions.
+
+labN2.v
+Here we modify the instruction fetch module. We added a PC output. We remove come aspects of the behavioual part of what we implemented in the previous program labN1.v and promote it to the circuit level inside instruction fetch. We also introduced INT and entryPoint signals which will help with interrupting the program and switching it to another. entryPoint is the address to switch the program to work on for the next instruction. PCin becomes the output of the circuit. We create another module called yPC. This will take several inputs and determine the next instruction that needs to be executed. This will includes branches and jumps or the behavioural part implemented before is not longer needed.
+
+labN3.v
+
+labN4.v
+
+labN5.v
+
+conclusion:

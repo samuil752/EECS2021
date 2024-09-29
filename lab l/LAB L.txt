@@ -1,0 +1,103 @@
+LAB L
+
+intro:
+
+yMux1.v
+This program will be used in other programs. The functionality of this program is that it acts as a 2 input (2 to 1) multiplexer. This program does not have initial block and its ports are listed in the module line. This way it will act as a library class for other programs. You can explicitly mention the module name you want to compile in the command prompt. A 2 to 1 multiplexer consists of 2 inputs a and b, (the negation c and a) OR (c and b) gives the output z. C is used as control input; 0 means z is a, 1 means z is b.
+
+labl1.v
+This is an exhaustive test, meaning it will test all 8 (2 for a, b and c) possibilities and output "passed" if the test passed or failed if it failed. I used a nested for-loop to achieve this. The condition for a test to pass is if the output from the module instantiation algins with the expected output, if yes, display "passed", else, display "failed".
+
+yMux2.v
+This program is another program that will act as a library class. Here is another multiplexer that will control a bus of 2 bits. Two 2bit buses will be taken as input and there will be one control input of 1 bit and a 2 bit output just like before but this time with two bits instead of one.
+
+labl2.v
+This is also an exhaustive test, with 32(4 for a and b 2 for c 4*4*2=32) possibilities. This time I did not need an "expected" signal, since I know how a multiplexer works, I built an if statement that will consider cases of c and its consequences to determine whether the test has passed or not.
+
+yMux.v
+This program is more dynamic than the previous programs. Its a 2 to 1 Mux just like before in yMux2.v and yMux1.v but this time we get to decide the size of the bus. Previously we were having many instantiating lines, due to the multi-wire 2 to 1 Mux nature, but we can use an array to instantiate multiple times in the same line, this much more efficient. We use a parameter, the client gives a number for the fixed parameter that decides the size of the buses. After that is decided, the parameter value is used throughout (including for instantiation) to conduct the same procedure as done for 2 bit 2 to 1 MUX.
+
+labl3.v
+We test yMux.v with 32 bits of bus size. 32 bits means alot of combinations and it would not be reasonable to do all of them. So instead we take a random sample of 10 and test them by using a repeat loop 10 times and substituting random values and then testing those combinations.
+
+yAdder1.v
+This called a full-adder, a and b are the addend and augend, and cin is the carry from the previous add operation. z is the output and cout is the carry bit.
+
+labl5.v
+This will test the full-adder.
+
+yAdder2.v
+in[0]: This connects the external carry-in bit cin to the carry-in of the least significant bit adder (yAdder1[0]).
+in[31:1]: This connects the carry-out from each yAdder1 instance to the carry-in of the next higher significant bit adder. For example, the carry-out of yAdder1[0] is the carry-in for yAdder1[1], and so on.
+
+code block:
+    yAdder1 mine[31:0] (z, out, a, b, in); //what is happening here?
+    assign in[0] = cin; //this tells us cin and in[0] are equivalent
+    assign in[31:1] = out [30:0]; //this tells us cin and in[1] to in[31] are equivalent to out[0] to out[30] respectively.
+
+tracing:
+mine[0].
+in[0]<--cin //equivalent
+z[0] = in[0] + a[0] + b[0]
+out[0] -carry bit
+in[1]<--out[0] //equivalent
+mine[1].
+z[1] = in[1] + a[1] + b[1]
+out[1] -carry bit
+in[2]<--out[1] //equivalent
+mine[2].
+z[2] = in[2] + a[2] + b[2]
+out[2] -carry bit
+in[3]<--out[2] //equivalent
+...
+mine[31].
+z[2] = in[2] + a[2] + b[2]
+out[31] -carry bit
+
+labl6.v and labl7.v
+There is no difference between signed addition and unsigned addition. Since the addition operation done on both is the same.
+
+yArith.v
+We have enhanced our adder so that it supports subtraction aswell.
+before:
+-adder takes input from client and interprets it as positive unsigned numbers and then adds
+after:
+-adder takes input from client and control input [if (ctrl=0) do addition like normal, else do subtraction by taking the negative 2's complementary rep of the addend)
+in other words take inputs a, b, ctrl:
+if (ctrl=0) /*do normal addition*/ a+b;
+else /*do (a-b)*/ a+[(not b) + 1];
+
+labl8.v
+the test for yArith.v
+
+yAlu.v
+This will combine everything into one module the ALU.
+
+labl9.v
+check this 
+
+labl10.v
+added slt option. 
+
+labl11.v
+added zero exception option.
+algorithim explaination
+[z:32bits]
+split:[z:16bits]OR[z:16bits]=[z16:16bits]
+[z16:16bits]
+split:[z16:8bits]OR[z16:8bits]=[z8:8bits]
+....
+[z2:2bits]
+split:[z2:1bit]OR[z2:1bit]=[z1:1bit] = (z is all zeros?) 0:1;
+not(z1)=zero_exeption_result;
+zero_exeption_result = (z is all zeros?) 1:0;
+
+concluding notes:
+-This approach to contructing circuits is known as *structural modeling*.
+-in structural modeling, a component never uses operators, such as + or <.
+-carry exception: feed cout into ex (exception signal).
+-overflow exception: the sum of the same sign +++=overflow(result -), -+-=overflow(result +), causes an exception. Becz, does not fit into 32 bits. Sign switches.
+• In order to accommodate multiple exceptions, we can treat ex (or zero) as a multi- bit signal; e.g. ex[0] is a zero flag, ex[1] is a carry flag, and so on.
+• Unlike a built-in component such as and, a user-defined component must have an instance name upon instantiation; i.e. the name is not optional.
+
+

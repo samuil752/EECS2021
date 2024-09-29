@@ -1,0 +1,28 @@
+//For the following C statement, write the corresponding RISC-V
+//assembly code. Assume that the variables f, g, h, i, and j are
+//assigned to registers x5, x6, x7, x28, and x29, respectively. Assume
+//that the base address of the arrays A and B are in registers x10 and
+//x11, respectively.
+//B[8] = A[i-j];
+
+
+
+A: DC "0123456789ABCDEF\0"
+B: DC "abcdefghijklmnop\0"
+
+ecall x5, x0, 5
+ecall x6, x0, 5
+ecall x7, x0, 5
+ecall x28, x0, 5
+ecall x29, x0, 5
+
+addi a1, x0, (B+8)
+addi a4, x0, A
+sub a5, x28, x29
+add a4, a4, a5
+lb a2, 0(a4)
+sb a2, 0(a1)
+addi a3, x0, B
+
+ecall x0, a3, 4
+

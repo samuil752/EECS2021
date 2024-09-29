@@ -1,0 +1,89 @@
+fib 
+operation 1: storing
+STACK
+1. fib(5) storing -8 downwards
+ADDRESS		INTEGER  
+-64		40 <-seventh           
+-56		2  <-eight                 
+-48		40 <-fifth                 
+-40		3  <-sixth                
+-32		40 <-third                 
+-24		4  <-fourth                 
+-16		0  <-first                 
+-8		5  <-second		
+reached base case go to operation 2.1.
+
+2. fib(2) decrement stack pointer down 2 levels (sp was-32 now -48)
+storing -40 downwards
+ADDRESS		INTEGER
+-48		56 
+-40		2                 		
+reached base case go to operation 2.4.
+
+3. fib(3) decrement stack pointer down 4 levels (sp was-16 now -48)
+storing -24 downwards
+-48		40
+-40		2
+-32		56
+-24		3
+reached base case go to operation 2.6
+
+Operarion2: address 40
+1. reached base case 1
+save sum culmination into stack (x10:1) (@address -56)
+call fib(n-2) (2-2=0=x10) (this is base case 0=x10) go to operation 3.1.
+2.
+save sum culmination into stack (x10:1) (@address -40)
+call fib(n-2) (3-2=1=x10) (this is base case 1=x10) go to operation 3.2.
+3.
+save sum culmination into stack (x10:2) (@address -24)
+call fib(n-2) (4-2=2=x10) go to operation 1.2. 
+4. reached base case 1
+save sum culmination into stack (x10:1) (@address -40)
+call fib(n-2) (2-2=0=x10) (this is base case 0=x10) go to operation 3.3.
+5.
+save sum culmination into stack (x10:3) (@address -8)
+call fib(n-2) (5-2=3=x10) go to operation 1.3.
+6. reached base case 1
+save sum culmination into stack (x10:1) (@address -40)
+call fib(n-2) (2-2=0=x10) (this is base case 0=x10) go to operation 3.5.
+7.
+save sum culmination into stack (x10:1) (@address -24)
+call fib(n-2) (3-2=1=x10) (this is base case 1=x10) go to operation 3.6.
+
+operation3: address 56
+1.
+new culmination = sum culmination + (fib (n-2)): add 1+0=1 save into x10
+unload return address (40) (@address -64)
+increment stack pointer up 2 levels goto operation 2.2. (sp: was-64 now-48)
+2.
+new culmination = sum culmination + (fib (n-2)): add 1+1=2 save into x10
+unload return address (40) (@address -48)
+increment stack pointer up 2 levels goto operation 2.3. (sp: was-48 now -32)
+3.
+new culmination = sum culmination + x10 (fib (n-2)): add 1+0=1 save into x10
+unload return address (56) (@address -48)
+increment stack pointer up 2 levels goto operation 3.4. (sp: was-48 now -32)
+4.
+new culmination = old culmination + sum culmination: add 2+1=3 save into x10
+unload return address (40) (@address -32)
+increment stack pointer up 2 levels goto operation 2.5. (sp: was-32 now -16)
+5.
+new culmination = sum culmination + x10 (fib (n-2)): add 1+0=1 save into x10
+unload return address (40) (@address -48)
+increment stack pointer up 2 levels goto operation 2.7. (sp: was-48 now -32)
+6.
+new culmination = sum culmination + x10 (fib (n-2)): add 1+1=2 save into x10
+unload return address (56) (@address -32)
+increment stack pointer up 2 levels goto operation 3.7. (sp: was-32 now -16)
+7.
+new culmination = old culmination + sum culmination: add 3+2=5 save into x10
+unload return address (0) (@address -16)
+increment stack pointer up 2 levels goto end of program. (sp: was-16 now 0)
+
+end of program:
+print x10 which is 5.
+
+
+
+
